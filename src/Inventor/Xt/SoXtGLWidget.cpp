@@ -862,8 +862,8 @@ void
 SoXtGLWidget::glLockNormal(void)
 {
   assert(PRIVATE(this)->glxwidget != (Widget) NULL);
-  glXMakeCurrent(SoXt::getDisplay(), XtWindow(PRIVATE(this)->glxwidget),
-                 PRIVATE(this)->normalcontext);
+  // glXMakeCurrent(SoXt::getDisplay(), XtWindow(PRIVATE(this)->glxwidget),
+  //               PRIVATE(this)->normalcontext);
 }
 
 /*!
@@ -909,7 +909,7 @@ SoXtGLWidget::glSwapBuffers(void)
 #if SOXT_DEBUG && 0
   SoDebugError::postInfo("SoXtGLWidget::glSwapBuffers", "called");
 #endif // SOXT_DEBUG
-  glXSwapBuffers(SoXt::getDisplay(), XtWindow(PRIVATE(this)->glxwidget));
+  //glXSwapBuffers(SoXt::getDisplay(), XtWindow(PRIVATE(this)->glxwidget));
 }
 
 /*!
@@ -932,13 +932,13 @@ SbBool
 SoXtGLWidgetP::isDirectRendering(void)
 {
   PUBLIC(this)->glLockNormal();
-  GLXContext ctx = glXGetCurrentContext();
+  GLXContext ctx = 0 ; // glXGetCurrentContext();
   if (!ctx) {
     SoDebugError::postWarning("SoXtGLWidgetP::isDirectRendering",
                               "Could not get hold of current context.");
     return TRUE;
   }
-  Bool isdirect = glXIsDirect(SoXt::getDisplay(), ctx);
+  Bool isdirect = true;// glXIsDirect(SoXt::getDisplay(), ctx);
   PUBLIC(this)->glUnlockNormal();
   return isdirect ? TRUE : FALSE;
 }
@@ -1010,13 +1010,13 @@ SoXtGLWidgetP::buildContext(void)
   SoXtGLWidget * share = (SoXtGLWidget *)
     SoAny::si()->getSharedGLContext((void *)display, (void *)screen);
   
-  this->normalcontext =
-    glXCreateContext(display, visual, 
-                     share ? PRIVATE(share)->normalcontext : None, 
-                     GL_TRUE);
+  //this->normalcontext =
+    // glXCreateContext(display, visual, 
+    //                 share ? PRIVATE(share)->normalcontext : None, 
+    //                 GL_TRUE);
   if (!this->normalcontext) {
     SoDebugError::postInfo("SoXtGLWidget::glInit",
-                           "glXCreateContext() returned NULL");
+                           "CreateContext() returned NULL");
     XtAppError(SoXt::getAppContext(), "no context");
   }
   else {
@@ -1032,7 +1032,7 @@ SoXtGLWidgetP::cleanupContext(void)
     Display * display = SoXt::getDisplay();
     int screen = DefaultScreen(display);
     SoAny::si()->unregisterGLContext((void *)PUBLIC(this));
-    glXDestroyContext(display, this->normalcontext);
+    //glXDestroyContext(display, this->normalcontext);
     this->normalcontext = NULL;
   }
 }
@@ -1049,7 +1049,7 @@ SoXtGLWidgetP::createVisual(void)
   while (this->normalvisual == NULL && trynum < 8) {
     int arraysize = this->buildGLAttrs(attrs, trynum);
     assert(arraysize < ARRAYSIZE);
-    this->normalvisual = glXChooseVisual(display, screen, attrs);
+    //this->normalvisual = glXChooseVisual(display, screen, attrs);
     trynum++;
   }
 

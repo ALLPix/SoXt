@@ -440,10 +440,10 @@ createVisualInfo(
   assert(widget->soxtGLArea.attribList);
 
   if (widget->soxtGLArea.visualInfo == NULL)
-    widget->soxtGLArea.visualInfo = 
-      glXChooseVisual(XtDisplay(widget),
-                       XScreenNumberOfScreen(XtScreen(widget)),
-                       widget->soxtGLArea.attribList);
+    // widget->soxtGLArea.visualInfo = 
+      //glXChooseVisual(XtDisplay(widget),
+      //                 XScreenNumberOfScreen(XtScreen(widget)),
+      //                 widget->soxtGLArea.attribList);
   if (! widget->soxtGLArea.visualInfo)
     error((Widget) widget, "requested visual not supported");
 } // createVisualkInfo()
@@ -737,7 +737,7 @@ SoXtGLAreaMakeCurrent(
   Widget w,
   GLXContext ctx)
 {
-  glXMakeCurrent(XtDisplay(w), XtWindow(w), ctx);
+  //glXMakeCurrent(XtDisplay(w), XtWindow(w), ctx);
 } // SoXtGLAreaMakeCurrent()
 
 // *************************************************************************
@@ -746,7 +746,7 @@ void
 SoXtGLAreaSwapBuffers(
   Widget w)
 {
-  glXSwapBuffers(XtDisplay(w), XtWindow(w));
+  //glXSwapBuffers(XtDisplay(w), XtWindow(w));
 } // SoXtGLAreaSwapBuffers()
 
 // *************************************************************************
